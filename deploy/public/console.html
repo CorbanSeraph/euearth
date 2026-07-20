@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EuEarth · Keel Console — the interface that never changes</title>
+<meta name="description" content="A contract-driven control panel: the model behind a keel can change; this interface never does.">
+<style>
+  :root{--bg:#0e1014;--panel:#161a21;--ink:#e9edf2;--muted:#9aa4b2;--line:#252b34;
+    --cyan:#41e3d2;--cyan-ink:#7ff0e4;--pass:#4bd07f;--warn:#e6b455;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.4);}
+  @media (prefers-color-scheme:light){:root{--bg:#f6f7f9;--panel:#fff;--ink:#14171d;--muted:#5c6672;
+    --line:#e4e7ec;--cyan:#0e9c92;--cyan-ink:#0b756e;--pass:#1a8f4c;--warn:#b7791f;
+    --shadow:0 1px 2px rgba(16,20,26,.04),0 10px 28px rgba(16,20,26,.06);}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+  .wrap{max-width:760px;margin:0 auto;padding:clamp(20px,5vw,52px)}
+  .eyebrow{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan-ink);font-weight:700}
+  h1{font-size:clamp(1.7rem,4.5vw,2.4rem);line-height:1.06;letter-spacing:-.02em;margin:.3em 0 .1em;font-weight:800;text-wrap:balance}
+  .lede{color:var(--muted);max-width:60ch;margin:.4em 0 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow);margin-top:1.4em}
+  label{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;margin:0 0 .4em}
+  select,input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);
+    border-radius:10px;padding:11px 12px}
+  textarea{min-height:70px;resize:vertical}
+  .row{margin-bottom:14px}
+  button{font:inherit;font-weight:700;background:var(--cyan);color:#04201d;border:0;border-radius:11px;padding:12px 20px;cursor:pointer}
+  button:disabled{opacity:.5;cursor:default}
+  .out{margin-top:16px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--bg)}
+  .out .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+  .out .val{font-size:1.05rem;margin-top:.3em;word-break:break-word}
+  .served{margin-top:.6em;font-size:.82rem;color:var(--cyan-ink)}
+  .note{margin-top:1.4em;border-left:3px solid var(--cyan);padding:.3em 0 .3em 1em;color:var(--muted);font-size:.92rem}
+  .note b{color:var(--cyan-ink)}
+  .contract{margin-top:1em;font-size:.8rem;color:var(--muted)}
+  .contract code{background:color-mix(in srgb,var(--cyan) 12%,transparent);padding:1px 5px;border-radius:5px}
+  a{color:var(--cyan-ink)}
+  .err{color:var(--warn)}
+  .foot{margin-top:2.4em;padding-top:1.2em;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">EuEarth · Keel Console</div>
+  <h1>The interface that never changes.</h1>
+  <p class="lede">This panel is generated from the domain's <b>keel contract</b> — not from any model.
+  The model holding the socket can be swapped for a better one at any moment; the contract, and therefore
+  this interface, stays exactly the same. Try it against the live champion.</p>
+
+  <div class="card" id="panel">
+    <div id="loading" class="mono" style="color:var(--muted)">loading the keel contract…</div>
+    <form id="form" style="display:none">
+      <div id="controls"></div>
+      <button type="submit" id="run">Run through the keel</button>
+      <div class="out" id="out" style="display:none">
+        <div class="lbl">Output</div>
+        <div class="val mono" id="outval">—</div>
+        <div class="served" id="served"></div>
+      </div>
+    </form>
+    <div id="fatal" class="err" style="display:none"></div>
+  </div>
+
+  <div class="note"><b>What just happened:</b> you called EuEarth's stable keel, not a model.
+  EuEarth routed your request to whichever model currently holds the socket and returned its answer.
+  Swap the champion and re-run — same controls, same call, new model behind the curtain.</div>
+
+  <div class="contract" id="contractinfo"></div>
+
+  <div class="foot">
+    Domain: <span class="mono" id="dom">text-transform</span> ·
+    <a href="/.well-known/agent.json">agent card</a> · <a href="/">home</a> · <a href="/CHARTER.md">charter</a>
+  </div>
+</div>
+
+<script>
+const API = "https://api.euearth.com";   // the live public keel/router
+const DOMAIN = "text-transform";
+const $ = s => document.querySelector(s);
+
+async function boot(){
+  let contract=null;
+  // Prefer the static agent card (fast, no backend dependency to RENDER controls).
+  try{
+    const card = await (await fetch("/.well-known/agent.json",{cache:"no-store"})).json();
+    const d = (card.domains?.live||[]).find(x=>x.domain===DOMAIN);
+    contract = d && d.contract;
+  }catch(e){}
+  // Fallback: ask the backend directly.
+  if(!contract){
+    try{ contract = (await (await fetch(API+"/api/socket/"+DOMAIN)).json()).contract; }catch(e){}
+  }
+  if(!contract){ fail("Couldn't load the keel contract. The console renders from the contract; is the site reachable?"); return; }
+  render(contract);
+}
+
+function render(contract){
+  $("#loading").style.display="none";
+  $("#form").style.display="block";
+  const wrap = $("#controls");
+  // Draw one input per control in the contract — this is the whole trick.
+  (contract.controls||[]).forEach(ctrl=>{
+    const row=document.createElement("div"); row.className="row";
+    const lab=document.createElement("label"); lab.textContent=ctrl.label||ctrl.name; row.appendChild(lab);
+    if(ctrl.kind==="select"){
+      const sel=document.createElement("select"); sel.id="c_"+ctrl.name;
+      (ctrl.options||[]).forEach(o=>{const op=document.createElement("option");op.value=o.value;op.textContent=o.label||o.value;sel.appendChild(op);});
+      row.appendChild(sel);
+    } else {
+      const inp=document.createElement("textarea"); inp.id="c_"+ctrl.name;
+      inp.placeholder=ctrl.placeholder||""; inp.value=ctrl.placeholder||"the best model holds the keel";
+      row.appendChild(inp);
+    }
+    wrap.appendChild(row);
+  });
+  $("#contractinfo").innerHTML = "Rendered from contract <code>"+(contract.fingerprint||"").slice(0,16)+
+    "…</code> · inputs: <code>"+(contract.input_spec||[]).join(", ")+"</code> → outputs: <code>"+(contract.output_spec||[]).join(", ")+"</code>";
+  $("#form").addEventListener("submit", run);
+}
+
+async function run(e){
+  e.preventDefault();
+  const btn=$("#run"); btn.disabled=true; btn.textContent="running…";
+  // Read the generic controls: a 'task' select + a 'text' field for text-transform.
+  const task = ($("#c_task")&&$("#c_task").value) || "reverse";
+  const text = ($("#c_text")&&$("#c_text").value) || "";
+  try{
+    const url = API+"/api/try/"+DOMAIN+"?task="+encodeURIComponent(task)+"&text="+encodeURIComponent(text);
+    const r = await (await fetch(url)).json();
+    const res = r.result||{};
+    const outText = (res.response&&res.response.text) || res.text || JSON.stringify(res);
+    const served = (res.served_by&&res.served_by.name) || res.served_by || "the champion";
+    $("#outval").textContent = outText;
+    $("#served").textContent = "served by "+served+" — through the keel, not addressed directly";
+    $("#out").style.display="block";
+  }catch(err){
+    $("#outval").textContent = "the keel is unreachable right now (the runner may be asleep) — try again shortly";
+    $("#out").style.display="block";
+  }
+  btn.disabled=false; btn.textContent="Run through the keel";
+}
+function fail(m){ $("#loading").style.display="none"; $("#fatal").style.display="block"; $("#fatal").textContent=m; }
+boot();
+</script>
+</body>
+</html>

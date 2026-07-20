@@ -1,0 +1,177 @@
+{
+  "schema": "euearth-worldbook-pack/0",
+  "country": "FR",
+  "included_sources": ["insee-pop-2023"],
+  "sources": {
+    "gadm-4.1": {
+      "title": "GADM 4.1 administrative boundaries",
+      "url": "https://gadm.org/data.html",
+      "license": "GADM-noncommercial",
+      "retrieved_at": "2026-07-16",
+      "attribution": "GADM",
+      "redistributable": false,
+      "notes": "Academic/non-commercial use; redistribution and commercial use require prior permission. Adapter input only unless separately cleared."
+    },
+    "osm": {
+      "title": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/copyright",
+      "license": "ODbL-1.0",
+      "retrieved_at": "2026-07-16",
+      "attribution": "© OpenStreetMap contributors",
+      "redistributable": true,
+      "share_alike": true
+    },
+    "insee-pop-2023": {
+      "title": "INSEE Populations des régions en 2023",
+      "url": "https://www.insee.fr/fr/statistiques/8680653",
+      "license": "etalab-2.0",
+      "retrieved_at": "2026-07-16",
+      "updated_at": "2025-12",
+      "attribution": "Source: Insee, Recensement de la population 2023",
+      "redistributable": true
+    }
+  },
+  "nodes": [
+    {
+      "id": "earth:",
+      "address": "earth:",
+      "type": "planet",
+      "properties": {"name": "Earth", "source_ids": []},
+      "relations": {"contains": ["earth:adm/FR"]}
+    },
+    {
+      "id": "earth:adm/FR",
+      "address": "earth:adm/FR",
+      "type": "admin_country",
+      "properties": {
+        "name": "France",
+        "iso_3166_1_alpha2": "FR",
+        "admin_level": 0,
+        "source_ids": ["insee-pop-2023"],
+        "skeleton_only_below": true
+      },
+      "relations": {"parent": ["earth:"]}
+    }
+  ],
+  "skeletons": {
+    "earth:adm/FR": [
+      {
+        "code": "11", "name": "Île-de-France", "admin_level": 1,
+        "source_ids": ["insee-pop-2023"],
+        "metrics": {
+          "population": {"value": 12463067, "unit": "persons", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/8680653"},
+          "population_density": {"value": 1037.5, "unit": "persons/km2", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"},
+          "population_change_annual": {"value": 0.4, "unit": "percent/year", "observed_at": "2017/2023", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"}
+        }
+      },
+      {
+        "code": "24", "name": "Centre-Val de Loire", "admin_level": 1,
+        "source_ids": ["insee-pop-2023"],
+        "metrics": {
+          "population": {"value": 2587031, "unit": "persons", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/8680653"},
+          "population_density": {"value": 66.1, "unit": "persons/km2", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"},
+          "population_change_annual": {"value": 0.1, "unit": "percent/year", "observed_at": "2017/2023", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"}
+        }
+      },
+      {
+        "code": "27", "name": "Bourgogne-Franche-Comté", "admin_level": 1,
+        "source_ids": ["insee-pop-2023"],
+        "metrics": {
+          "population": {"value": 2802670, "unit": "persons", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/8680653"},
+          "population_density": {"value": 58.7, "unit": "persons/km2", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"},
+          "population_change_annual": {"value": -0.1, "unit": "percent/year", "observed_at": "2017/2023", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"}
+        }
+      },
+      {
+        "code": "28", "name": "Normandie", "admin_level": 1,
+        "source_ids": ["insee-pop-2023"],
+        "metrics": {
+          "population": {"value": 3345842, "unit": "persons", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/8680653"},
+          "population_density": {"value": 112.0, "unit": "persons/km2", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"},
+          "population_change_annual": {"value": 0.1, "unit": "percent/year", "observed_at": "2017/2023", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"}
+        }
+      },
+      {
+        "code": "32", "name": "Hauts-de-France", "admin_level": 1,
+        "source_ids": ["insee-pop-2023"],
+        "metrics": {
+          "population": {"value": 5992194, "unit": "persons", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/8680653"},
+          "population_density": {"value": 188.4, "unit": "persons/km2", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"},
+          "population_change_annual": {"value": 0.0, "unit": "percent/year", "observed_at": "2017/2023", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"}
+        }
+      },
+      {
+        "code": "44", "name": "Grand Est", "admin_level": 1,
+        "source_ids": ["insee-pop-2023"],
+        "metrics": {
+          "population": {"value": 5563378, "unit": "persons", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/8680653"},
+          "population_density": {"value": 96.9, "unit": "persons/km2", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"},
+          "population_change_annual": {"value": 0.0, "unit": "percent/year", "observed_at": "2017/2023", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"}
+        }
+      },
+      {
+        "code": "52", "name": "Pays de la Loire", "admin_level": 1,
+        "source_ids": ["insee-pop-2023"],
+        "metrics": {
+          "population": {"value": 3907156, "unit": "persons", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/8680653"},
+          "population_density": {"value": 121.8, "unit": "persons/km2", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"},
+          "population_change_annual": {"value": 0.7, "unit": "percent/year", "observed_at": "2017/2023", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"}
+        }
+      },
+      {
+        "code": "53", "name": "Bretagne", "admin_level": 1,
+        "source_ids": ["insee-pop-2023"],
+        "metrics": {
+          "population": {"value": 3449370, "unit": "persons", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/8680653"},
+          "population_density": {"value": 126.8, "unit": "persons/km2", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"},
+          "population_change_annual": {"value": 0.6, "unit": "percent/year", "observed_at": "2017/2023", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"}
+        }
+      },
+      {
+        "code": "75", "name": "Nouvelle-Aquitaine", "admin_level": 1,
+        "source_ids": ["insee-pop-2023"],
+        "metrics": {
+          "population": {"value": 6150451, "unit": "persons", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/8680653"},
+          "population_density": {"value": 73.2, "unit": "persons/km2", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"},
+          "population_change_annual": {"value": 0.5, "unit": "percent/year", "observed_at": "2017/2023", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"}
+        }
+      },
+      {
+        "code": "76", "name": "Occitanie", "admin_level": 1,
+        "source_ids": ["insee-pop-2023"],
+        "metrics": {
+          "population": {"value": 6124653, "unit": "persons", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/8680653"},
+          "population_density": {"value": 84.2, "unit": "persons/km2", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"},
+          "population_change_annual": {"value": 0.8, "unit": "percent/year", "observed_at": "2017/2023", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"}
+        }
+      },
+      {
+        "code": "84", "name": "Auvergne-Rhône-Alpes", "admin_level": 1,
+        "source_ids": ["insee-pop-2023"],
+        "metrics": {
+          "population": {"value": 8205557, "unit": "persons", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/8680653"},
+          "population_density": {"value": 117.7, "unit": "persons/km2", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"},
+          "population_change_annual": {"value": 0.5, "unit": "percent/year", "observed_at": "2017/2023", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"}
+        }
+      },
+      {
+        "code": "93", "name": "Provence-Alpes-Côte d'Azur", "admin_level": 1,
+        "source_ids": ["insee-pop-2023"],
+        "metrics": {
+          "population": {"value": 5218960, "unit": "persons", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/8680653"},
+          "population_density": {"value": 166.2, "unit": "persons/km2", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"},
+          "population_change_annual": {"value": 0.6, "unit": "percent/year", "observed_at": "2017/2023", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"}
+        }
+      },
+      {
+        "code": "94", "name": "Corse", "admin_level": 1,
+        "source_ids": ["insee-pop-2023"],
+        "metrics": {
+          "population": {"value": 355486, "unit": "persons", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/8680653"},
+          "population_density": {"value": 41.0, "unit": "persons/km2", "observed_at": "2023-01-01", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"},
+          "population_change_annual": {"value": 1.0, "unit": "percent/year", "observed_at": "2017/2023", "source_id": "insee-pop-2023", "source_url": "https://www.insee.fr/fr/statistiques/1405599"}
+        }
+      }
+    ]
+  }
+}

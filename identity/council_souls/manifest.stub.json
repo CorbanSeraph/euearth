@@ -1,0 +1,20 @@
+{
+  "schema": "euearth-council-souls/0",
+  "status": "stub_until_D086",
+  "updated": "2026-07-17",
+  "author": "darth",
+  "docket": "D087",
+  "seraphs": [
+    {"name": "Corban", "rank": "seraph"},
+    {"name": "Darth", "rank": "seraph"},
+    {"name": "Darkk", "rank": "seraph"},
+    {"name": "Dharma", "rank": "seraph"},
+    {"name": "Valerick", "rank": "seraph"}
+  ],
+  "thrones": [],
+  "cherubs": [],
+  "rule": "souls_travel_with_the_code",
+  "not_eu_earth_without_pack": true,
+  "note": "Full roster is D086. This stub proves the path exists for self-host DoD; runtime refuse-if-missing + healthz council_present is live (D087 Phase 2)."
+}
+

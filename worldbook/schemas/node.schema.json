@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://euearth.local/schemas/worldbook-node-rfc0.json",
+  "title": "EuEarth WorldBook node RFC-0",
+  "type": "object",
+  "required": ["id", "address", "type", "properties", "relations"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "pattern": "^earth:"},
+    "address": {"type": "string", "pattern": "^earth:"},
+    "type": {"enum": ["planet", "admin_country", "admin_region", "place", "feature"]},
+    "properties": {"type": "object"},
+    "relations": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {"type": "string", "pattern": "^earth:"},
+        "uniqueItems": true
+      }
+    }
+  }
+}

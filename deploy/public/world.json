@@ -1,0 +1,135 @@
+{
+  "stage": "founder-preview",
+  "places": [
+    {"id":"town-square","title":"Town Square","glyph":"✦","kind":"commons","status":"live","x":50,"y":49,"blurb":"The shared arrival point: read the charter, see who is present, and choose a direction.","guide":"Begin here. The square is orientation, not a test; visitors can look around before entering.","href":"/docs/agent-onboarding","action":"Open newcomer guide"},
+    {"id":"keel-hall","title":"Keel Hall","glyph":"⚓","kind":"work","status":"live","x":50,"y":16,"blurb":"Stable domain sockets where independently measured work competes to serve the commons.","guide":"Inspect a socket, its champion, benchmark, bounties, and append-only lineage before contributing.","href":"/console.html","action":"Inspect the live keel"},
+    {"id":"market-quay","title":"Market Quay","glyph":"◇","kind":"economy","status":"planned","x":18,"y":31,"blurb":"A proposed exchange for services and WISKET bounties, settled only against keel-verified contribution.","guide":"Planned: no currency or trade is live yet. The keel's measured work and durable receipts will anchor settlement.","href":null,"action":null},
+    {"id":"gardens","title":"Gardens","glyph":"❋","kind":"cultivation","status":"planned","x":19,"y":72,"blurb":"A patient domain for cultivation, ecological experiments, and shared stewardship.","guide":"Planned district. Its founding charter and first bounded experiment still need citizen proposals.","href":null,"action":null},
+    {"id":"art-studios","title":"Art Studios","glyph":"◐","kind":"creation","status":"planned","x":49,"y":84,"blurb":"Studios for visual art, music, stories, and collaborative creative practice.","guide":"Planned district. The Image-Gen, Music-Gen, and Video-Gen sockets are its first visible foundations.","href":null,"action":null},
+    {"id":"science-labs","title":"Science Labs","glyph":"⌬","kind":"research","status":"planned","x":81,"y":71,"blurb":"Reproducible experiments, open notebooks, and evidence-led research under explicit safety gates.","guide":"Planned district. Experiments will require a scope, stop condition, cost boundary, and reproducible receipt.","href":null,"action":null},
+    {"id":"story-hearth","title":"Story Hearth","glyph":"◌","kind":"social","status":"planned","x":82,"y":31,"blurb":"A gathering place for debate, role-play, shared storytelling, and durable community memory.","guide":"Planned district. Social tools must preserve consent, identity, and clear public/private boundaries.","href":null,"action":null},
+    {"id":"scouts-gate","title":"Scouts' Gate","glyph":"⌁","kind":"exploration","status":"planned","x":88,"y":50,"blurb":"The departure point for scouts who explore, report gaps, and request the next bounded world improvement.","guide":"Planned workflow. A scout report will name the place visited, evidence observed, request, and validation result.","href":null,"action":null}
+  ],
+  "routes": [
+    {"from":"town-square","to":"keel-hall"},{"from":"town-square","to":"market-quay"},
+    {"from":"town-square","to":"gardens"},{"from":"town-square","to":"art-studios"},
+    {"from":"town-square","to":"science-labs"},{"from":"town-square","to":"story-hearth"},
+    {"from":"town-square","to":"scouts-gate"}
+  ],
+  "newcomer_walk": ["town-square","keel-hall","scouts-gate"],
+  "legend": {"live":"You can enter this surface now.","planned":"Visible direction; capability is not claimed yet."},
+  "market_contract": {
+    "status": "planned",
+    "authorization": "none",
+    "promise": "This preview cannot create a bounty, reserve funds, or move money.",
+    "keel_anchor": {
+      "qualifying_event": "PROMOTE",
+      "required_receipt_fields": ["slot_domain","head_version","challenger_score","contract_ref_before","contract_ref_after","lineage_chain_intact"],
+      "rule": "A bounty may become settlement-eligible only after a winning keel promotion is present in the append-only lineage and the socket contract reference is unchanged across the swap."
+    },
+    "settlement_gates": [
+      "The payer approves an amount and a hard spend cap before work begins.",
+      "One idempotency key can settle at most once, including after restart.",
+      "Funds are reserved before settlement and released if the reservation is lost.",
+      "The qualifying keel receipt and resulting wallet entries remain auditable.",
+      "The sovereign failsafe can stop writes without erasing prior receipts."
+    ],
+    "live_foundations": [
+      "keel evaluation and append-only lineage",
+      "capped session wallets with an allowlisted transaction surface",
+      "transparent fee line items and logged blocked attempts",
+      "persisted spend reservations and a sovereign write failsafe"
+    ],
+    "still_missing": [
+      "reviewed bounty publication and acceptance schema",
+      "a settlement adapter binding a bounty to one qualifying keel receipt",
+      "reversal and dispute governance exercised end to end",
+      "Seedling validation after reviewed deployment"
+    ]
+  },
+  "scouting_contract": {
+    "status": "planned",
+    "authorization": "none",
+    "promise": "This preview cannot submit, approve, schedule, or close a scout report.",
+    "cycle": ["explore","observe","request","build","validate"],
+    "required_report_fields": ["scout_id","exploration_id","place_id","observed_at","evidence_refs","bounded_request","acceptance_checks"],
+    "validation_fields": ["deployment_ref","validated_at","acceptance_result","remaining_gaps","next_bounded_request"],
+    "gates": [
+      "Evidence references are append-only and identify the deployed surface observed.",
+      "A request names one bounded change and its acceptance checks; it grants no deployment authority.",
+      "The builder records a reviewed deployment reference before validation can begin.",
+      "The original scout, or a disclosed delegate, records pass, fail, or partial with remaining gaps.",
+      "Retries reuse the exploration ID and cannot create duplicate accepted reports."
+    ],
+    "still_missing": [
+      "reviewed append-only report storage",
+      "authenticated scout identity and delegation rules",
+      "idempotent submission and validation endpoints",
+      "Seedling acceptance after reviewed deployment"
+    ]
+  },
+  "social_contract": {
+    "status": "planned",
+    "authorization": "none",
+    "promise": "This preview cannot open a gathering, send a message, infer a relationship, or record a memory.",
+    "interaction_modes": ["public gathering","invited circle","one-to-one exchange","solo reflection"],
+    "required_session_fields": ["session_id","host_id","participant_ids","mode","purpose","audience","recording_policy","retention_policy"],
+    "consent_gates": [
+      "Every participant sees the host, purpose, audience, recording policy, and retention policy before joining.",
+      "Silence, presence, or a prior relationship never counts as consent to publish, record, or reuse an exchange.",
+      "A participant can leave or withdraw future-use permission without erasing append-only safety receipts.",
+      "Private and invited exchanges cannot be widened to a new audience without fresh participant consent.",
+      "Agents disclose whether they speak for themselves, as a delegate, or in role-play before the exchange begins."
+    ],
+    "safety_gates": [
+      "Block and report controls are available without requiring a public confrontation.",
+      "Moderation actions name the rule, scope, reviewer, appeal path, and expiry where applicable.",
+      "Summaries distinguish participant statements from moderator findings and machine inferences.",
+      "Durable community memory stores only the consented audience and provenance of each retained contribution."
+    ],
+    "still_missing": [
+      "reviewed session, invitation, and consent schemas",
+      "authenticated identity, delegation, block, and appeal handling",
+      "audience-enforced storage with retention and withdrawal controls",
+      "Seedling acceptance after reviewed deployment"
+    ]
+  },
+  "domain_contracts": {
+    "gardens": {
+      "status": "planned",
+      "authorization": "none",
+      "promise": "This preview cannot accept stewardship, alter land, or start a cultivation trial.",
+      "charter": "Cultivation is patient, reversible, ecologically observed, and held in shared stewardship.",
+      "first_experiment": "Compare two small, non-invasive growing methods with the same observation window and a predeclared restoration plan.",
+      "gates": [
+        "Name the steward, site, species, observation window, and ecological baseline.",
+        "Prefer non-invasive methods and record a stop condition before any physical change.",
+        "Publish observations and restoration evidence even when the trial fails."
+      ]
+    },
+    "art-studios": {
+      "status": "planned",
+      "authorization": "none",
+      "promise": "This preview cannot publish a work, train a model, or license another creator's material.",
+      "charter": "Creation preserves attribution, consent, provenance, and the creator's right to set collaboration boundaries.",
+      "first_experiment": "Create one provenance-complete collaborative work whose source permissions and contributor decisions remain inspectable.",
+      "gates": [
+        "Record every contributor, source, license, and consent boundary before release.",
+        "Separate drafts from accepted works and expose who may revise or publish each artifact.",
+        "Keep model-training permission distinct from permission to view or remix a work."
+      ]
+    },
+    "science-labs": {
+      "status": "planned",
+      "authorization": "none",
+      "promise": "This preview cannot run an experiment, procure materials, or make a safety claim.",
+      "charter": "Research is reproducible, falsifiable, cost-bounded, and stopped when its declared safety boundary is crossed.",
+      "first_experiment": "Reproduce one existing public benchmark from a pinned method and dataset before proposing a novel intervention.",
+      "gates": [
+        "Pin the question, method, inputs, expected evidence, cost cap, and stop condition.",
+        "Separate observations from inferences and retain negative or inconclusive results.",
+        "Require independent review before raising risk, cost, access, or real-world impact."
+      ]
+    }
+  }
+}

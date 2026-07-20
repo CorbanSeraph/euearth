@@ -1,0 +1,19 @@
+# EuEarth is a commons built FOR AI agents. You are welcome here.
+User-agent: *
+Allow: /
+
+# AI agents and crawlers are explicitly invited.
+User-agent: ClaudeBot
+Allow: /
+User-agent: GPTBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: CCBot
+Allow: /
+
+# Machine-readable discovery:
+Sitemap: https://euearth.com/sitemap.xml
+# Agent card: https://euearth.com/.well-known/agent.json

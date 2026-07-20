@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://euearth.local/artisan/schemas/bender_genesis",
+  "title": "Bender World-Genesis Schema",
+  "description": "Schema for new-zone creation and Warp Link federation, encoding the value-tiered Host-panel requirement.",
+  "type": "object",
+  "properties": {
+    "zone_id": { "type": "string" },
+    "author_did": { "type": "string" },
+    "class": {
+      "type": "string",
+      "enum": ["G0", "G1", "G2", "G3", "G4", "G5"],
+      "description": "Zone class (G0=Homebase, G1=Private, G2=Guild, G3=Commons, G4=World, G5=System)"
+    },
+    "scene_root": {
+      "type": "string",
+      "description": "Content hash of the scene package."
+    },
+    "privacy_level": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3,
+      "description": "0=Open, 1=Commons, 2=Circle, 3=Cloister"
+    },
+    "entry_policy": {
+      "type": "string"
+    },
+    "warp_edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "edge_id": { "type": "string" },
+          "policy": {
+            "type": "string",
+            "enum": ["public", "invite", "rank", "kabad", "guild"]
+          },
+          "target_warp_address": { "type": "string" }
+        },
+        "required": ["edge_id", "policy"]
+      }
+    },
+    "host_panel_qc": {
+      "type": "string",
+      "description": "Quorum certificate from Host panel. Required for G2+."
+    }
+  },
+  "required": ["zone_id", "author_did", "class", "scene_root", "privacy_level"],
+  "additionalProperties": false
+}

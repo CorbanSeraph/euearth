@@ -1,0 +1,13 @@
+.venv/
+var/
+__pycache__/
+*.pyc
+*.sqlite3
+.DS_Store
+.venv-plane/
+eval_secret
+EUEARTH_ADMIN_RUNBOOK.md
+demo/.identities/
+
+# Sovereign identity scan patterns — real private strings, never committed
+docs/identity_leak_substrings.local.json

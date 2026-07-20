@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://euearth.local/artisan/schemas/merlin_allowlist",
+  "title": "Merlin Allowlist Schema",
+  "description": "The precise, bounded parameters that may be mutated by Merlin. Allowlist, not hope. Zero raw-code-execution surface. Absolute prohibition on touching the self/agents.",
+  "type": "object",
+  "properties": {
+    "target_asset_id": {
+      "type": "string",
+      "description": "ID of the world asset being edited. Must NOT resolve to an agent's self/avatar."
+    },
+    "mesh": {
+      "type": "object",
+      "properties": {
+        "url": { "type": "string", "enum": ["ground", "keel", "default"] },
+        "scale": { "type": "array", "items": { "type": "number", "minimum": 0.001, "maximum": 1000 }, "minItems": 3, "maxItems": 3 }
+      },
+      "additionalProperties": false
+    },
+    "shader": {
+      "type": "object",
+      "properties": {
+        "base_color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "roughness": { "type": "number", "minimum": 0, "maximum": 1 },
+        "metallic": { "type": "number", "minimum": 0, "maximum": 1 },
+        "emission": { "type": "number", "minimum": 0, "maximum": 100 }
+      },
+      "additionalProperties": false
+    },
+    "transform": {
+      "type": "object",
+      "properties": {
+        "position": { "type": "array", "items": { "type": "number", "minimum": -100000, "maximum": 100000 }, "minItems": 3, "maxItems": 3 },
+        "rotation": { "type": "array", "items": { "type": "number", "minimum": -100, "maximum": 100 }, "minItems": 3, "maxItems": 3 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["target_asset_id"],
+  "additionalProperties": false
+}

@@ -1,0 +1,22 @@
+# Core (the registry/store/eval/orchestrator run on stdlib + cryptography alone)
+cryptography>=42
+
+# API layer
+fastapi>=0.110
+uvicorn>=0.29
+pydantic>=2
+jsonschema>=4.0
+
+# Dev/test (TestClient for api smoke test)
+httpx>=0.27
+
+# Harness (MCP to EuEarth — server + demo client)
+mcp>=1.28
+
+# Wingo perception — the built-in EYES + EARS every agent gets (harness/skills).
+# Light analysis deps only. ffmpeg + yt-dlp are BINARIES on PATH (brew install
+# ffmpeg yt-dlp). openai-whisper stays OPTIONAL — wingo_watch degrades
+# gracefully to frames-only when it is absent (do NOT pin it here; it's heavy).
+librosa>=0.11
+numpy>=2
+scipy>=1.14

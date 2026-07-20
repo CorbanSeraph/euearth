@@ -1,0 +1,21 @@
+{
+  "policy_id": "artisan-policy-v0",
+  "description": "Best-effort provenance + license policy. This verifies manifests against policy; it does not and cannot GUARANTEE data was lawfully obtained.",
+  "allowed_licenses": [
+    "CC0-1.0",
+    "CC-BY-4.0",
+    "MIT",
+    "Apache-2.0",
+    "ODC-BY-1.0",
+    "PDDL-1.0"
+  ],
+  "banned_source_keywords": [
+    "scrape",
+    "torrent",
+    "leak",
+    "pirat"
+  ],
+  "required_manifest_fields": ["kind", "domain", "agent_id", "artifacts", "dataset_manifest", "recipe"],
+  "required_source_fields": ["name", "license", "sha256"],
+  "max_artifact_bytes": 268435456
+}
